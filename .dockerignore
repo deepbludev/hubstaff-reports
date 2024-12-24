@@ -1,0 +1,25 @@
+# Config
+config.yaml
+config.yaml.example
+
+# Reports output folder
+**/.output/
+
+# Docker
+docker-compose.yaml
+Dockerfile
+
+# Python
+**/__pycache__
+**/.pytest_cache
+**/.mypy_cache
+**/.ipynb_checkpoints
+**/.ruff_cache
+**/.venv
+
+# General
+**/logs
+**/tmp
+**/.coverage
+**/.env
+**/.vscode
