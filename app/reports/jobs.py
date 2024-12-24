@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from pathlib import Path
 
 from loguru import logger
 
@@ -16,8 +17,16 @@ async def generate_daily_report():
     client = HubstaffClient()
     report = await daily_activity(client, report_date=yesterday)
 
-    logger.info(f"Daily activity report generated for {yesterday}: {report}")
-    # TODO: Save report to output directory as HTML file
+    # Save report to output directory as HTML file
+    config = get_config()
+    # Make the output path relative to the project root
+    output_dir = Path.cwd() / config.reports.output_dir.lstrip("/")
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = output_dir / f"daily_activity_{yesterday.isoformat()}.html"
+    output_file.write_text(report.to_html())
+
+    logger.info(f"Daily activity report saved to {output_file}")
 
 
 def register_report_jobs(scheduler: Scheduler) -> None:

@@ -6,5 +6,5 @@ hubstaff:
   password: 
 
 reports:
-  output_dir: /reports
+  output_dir: .output
   report_time: "00:00"

@@ -11,3 +11,6 @@ wheels/
 
 # Config
 config.yaml
+
+# Output
+.output/
