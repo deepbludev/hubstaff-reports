@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+from datetime import date, timedelta
 
 from fastapi import FastAPI
 
@@ -27,7 +28,12 @@ async def health_check():
 @app.get("/reports/activity")
 async def get_activity_report(hubstaff_client: HubstaffClientDep):
     """Get the activity report."""
-    return await hubstaff_client.get_organizations()
+    today = date.today()
+    yesterday = today - timedelta(days=1)
+    return await hubstaff_client.get_work_by_day(
+        start_date=yesterday,
+        stop_date=today,
+    )
 
 
 async def startup(app: FastAPI):
