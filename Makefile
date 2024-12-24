@@ -19,4 +19,15 @@ lint:
 format:
 	uv run ruff check --fix .
 
+# Spin up a docker container with the application
+build:
+	docker compose up -d --build
+up:
+	docker compose up -d
+down:
+	docker compose down
+stop:
+	docker compose stop
+
+
 

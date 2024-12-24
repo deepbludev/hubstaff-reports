@@ -8,3 +8,10 @@ hubstaff:
 reports:
   output_dir: .output
   report_time: "00:00"
+  recipients:
+    - user1@example.com
+    - user2@example.com
+
+email:
+  sendgrid_api_key: your-sendgrid-api-key
+  from_address: your-verified@sender.com

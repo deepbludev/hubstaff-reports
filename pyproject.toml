@@ -9,6 +9,7 @@ dependencies = [
     "fastapi[standard]>=0.115.6",
     "loguru>=0.7.3",
     "pydantic-settings>=2.7.0",
+    "sendgrid>=6.11.0",
 ]
 
 [dependency-groups]

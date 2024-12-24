@@ -18,6 +18,7 @@ class Config(BaseSettings):
 
     hubstaff: HubstaffConfig
     reports: ReportConfig
+    email: EmailConfig
 
     class HubstaffConfig(BaseModel):
         """Hubstaff configuration."""
@@ -33,6 +34,13 @@ class Config(BaseSettings):
 
         output_dir: str
         report_time: str
+        recipients: list[str]
+
+    class EmailConfig(BaseModel):
+        """Email configuration."""
+
+        sendgrid_api_key: str
+        from_address: str
 
 
 @lru_cache()
