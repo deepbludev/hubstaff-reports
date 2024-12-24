@@ -5,7 +5,7 @@ from loguru import logger
 
 from app.reports.jobs import register_report_jobs
 
-from .api import reports_router
+from .api import reports_api_router, reports_html_router
 from .core.scheduler import get_scheduler
 
 
@@ -20,7 +20,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
-app.include_router(reports_router)
+app.include_router(reports_api_router)
+app.include_router(reports_html_router)
 
 
 @app.get("/health")
