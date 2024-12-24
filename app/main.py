@@ -1,8 +1,12 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from loguru import logger
+
+from app.reports.jobs import register_report_jobs
 
 from .api import reports_router
+from .core.scheduler import get_scheduler
 
 
 @asynccontextmanager
@@ -30,7 +34,12 @@ async def startup(app: FastAPI):
     Handles the startup of the application.
     It initializes the cron job scheduler.
     """
-    pass
+    scheduler = get_scheduler()
+    register_report_jobs(scheduler)
+    scheduler.start()
+    logger.info(f"Scheduled jobs: {len(scheduler.get_scheduled_jobs())}")
+    for job in scheduler.get_scheduled_jobs():
+        logger.info(f"Job ({job.id}): {job}")
 
 
 async def shutdown(app: FastAPI):
@@ -38,4 +47,5 @@ async def shutdown(app: FastAPI):
     Handles the shutdown of the application.
     It makes sure that the cron jobs are stopped.
     """
-    pass
+    scheduler = get_scheduler()
+    scheduler.shutdown()

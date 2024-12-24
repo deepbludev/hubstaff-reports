@@ -28,11 +28,20 @@ class DailyActivityReport(BaseModel):
 
     @classmethod
     def from_daily_activities(
-        cls, report_date: date, daily_activities: list[DailyActivity]
+        cls,
+        report_date: date,
+        daily_activities: list[DailyActivity],
     ) -> Self:
         """
         Create a daily activity summary report from a list of daily activities
         by grouping them by user and project.
+
+        Args:
+            report_date: The date of the report.
+            daily_activities: The list of daily activities to summarize.
+
+        Returns:
+            The daily activity summary report.
         """
         # only consider activities with tracked time for the report date
         activities = [

@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from app import reports
 from app.hubstaff.client import HubstaffClientDep
 
-reports_router = APIRouter(prefix="/reports")
+reports_router = APIRouter(prefix="/v1/reports")
 
 
 @reports_router.get("/activity")
