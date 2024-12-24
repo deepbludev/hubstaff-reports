@@ -81,23 +81,42 @@ class DailyActivityReport(BaseModel):
             <h1>Daily activity report for {{ date }}</h1>
             <table border="1" cellpadding="5" cellspacing="0">
                 <tr>
-                    <th>User</th>
-                    <th>Project</th>
-                    <th>Tracked</th>
-                </tr>
-                {% for user in by_user %}
-                    {% for project in user.by_project %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ project.id }}</td>
-                    <td>{{ project.tracked }}</td>
-                </tr>
+                    <th>Project / Employee</th>
+                    {% for user in users %}
+                    <th>{{ user }}</th>
                     {% endfor %}
+                </tr>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project }}</td>
+                    {% for user in users %}
+                    <td>{{ time_matrix[project][user]|default('0') }}</td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
             </table>"""
         )
 
     def to_html(self) -> str:
         """Convert the daily activity report to an HTML string."""
-        template = Template(self.get_html_template())
-        return template.render(date=self.date, by_user=self.by_user)
+        # Extract unique users and projects
+        users = sorted({user.id for user in self.by_user})
+        projects = sorted(
+            {project.id for user in self.by_user for project in user.by_project}
+        )
+
+        return Template(self.get_html_template()).render(
+            date=self.date,
+            users=users,
+            projects=projects,
+            time_matrix={
+                project.id: {
+                    user.id: project.tracked
+                    for user in self.by_user
+                    for p in user.by_project
+                    if p.id == project.id
+                }
+                for user in self.by_user
+                for project in user.by_project
+            },
+        )

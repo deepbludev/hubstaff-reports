@@ -17,9 +17,7 @@ async def generate_daily_report():
     client = HubstaffClient()
     report = await daily_activity(client, report_date=yesterday)
 
-    # Save report to output directory as HTML file
     config = get_config()
-    # Make the output path relative to the project root
     output_dir = Path.cwd() / config.reports.output_dir.lstrip("/")
     output_dir.mkdir(parents=True, exist_ok=True)
 
