@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 
 
+class Pagination(BaseModel):
+    page_start_id: int = 0
+    page_limit: int = 100
+
+
 class Credentials(BaseModel):
     email: str
     password: str

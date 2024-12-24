@@ -5,7 +5,7 @@ from fastapi import Depends
 from loguru import logger
 
 from app.core.config import get_config
-from app.hubstaff.models import Credentials, Organization
+from app.hubstaff.models import Credentials, Organization, Pagination
 
 
 class HubstaffClient:
@@ -44,14 +44,18 @@ class HubstaffClient:
         self.auth_token = response.json()["auth_token"]
         return self
 
-    async def get_organizations(self) -> list[Organization]:
+    async def get_organizations(
+        self, pagination: Pagination | None = None
+    ) -> list[Organization]:
+        """Get the organizations."""
         endpoint = "companies"
         await self.login()
 
+        pagination = pagination or Pagination()
         response = await self.client.get(
             endpoint,
             headers=self.header(),
-            params=self.token(),
+            params=self.token() | pagination.model_dump(),
         )
         data = response.raise_for_status().json()["organizations"]
         return [Organization(**org) for org in data]
