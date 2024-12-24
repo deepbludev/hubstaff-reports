@@ -23,3 +23,5 @@ Dockerfile
 **/.coverage
 **/.env
 **/.vscode
+**/.DS_Store
+**/.zip

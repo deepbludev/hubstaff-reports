@@ -62,10 +62,10 @@ class DailyActivityReport(BaseModel):
         return cls(
             date=report_date,
             by_user=[
-                DailyActivityReport.User(
+                cls.User(
                     id=user_id,
                     by_project=[
-                        DailyActivityReport.Project(id=project_id, tracked=tracked)
+                        cls.Project(id=project_id, tracked=tracked)
                         for project_id, tracked in projects.items()
                     ],
                 )

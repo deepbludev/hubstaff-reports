@@ -24,6 +24,7 @@ async def generate_daily_report():
     config = get_config()
     output_dir = Path.cwd() / config.reports.output_dir.lstrip("/")
     output_dir.mkdir(parents=True, exist_ok=True)
+
     output_file = output_dir / f"daily_activity_{yesterday.isoformat()}.html"
     output_file.write_text(report_html)
     logger.info(f"Daily activity report saved to {output_file}")
