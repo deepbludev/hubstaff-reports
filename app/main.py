@@ -1,9 +1,8 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from loguru import logger
 
-from app.core.settings import get_settings
+from app.hubstaff.client import HubstaffClientDep
 
 
 @asynccontextmanager
@@ -25,13 +24,18 @@ async def health_check():
     return {"status": "OK"}
 
 
+@app.get("/reports/activity")
+async def get_activity_report(hubstaff_client: HubstaffClientDep):
+    """Get the activity report."""
+    return await hubstaff_client.get_organizations()
+
+
 async def startup(app: FastAPI):
     """
     Handles the startup of the application.
     It initializes the cron job scheduler.
     """
-    settings = get_settings()
-    logger.info(settings)
+    pass
 
 
 async def shutdown(app: FastAPI):
