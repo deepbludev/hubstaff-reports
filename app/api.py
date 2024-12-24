@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 from app import reports
 from app.hubstaff.client import HubstaffClientDep
 
-# --region=api
+# region: api
 reports_api_router = APIRouter(prefix="/v1/reports")
 
 
@@ -21,9 +21,9 @@ async def daily_activity_report(
     )
 
 
-# --region=api
+# endregion: api
 
-# --region=html
+# region: html
 reports_html_router = APIRouter(prefix="/reports")
 
 
@@ -39,4 +39,4 @@ async def daily_activity_report_html(
     return report.to_html()
 
 
-# --endregion=html
+# endregion: html

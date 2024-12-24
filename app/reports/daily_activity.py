@@ -78,7 +78,7 @@ class DailyActivityReport(BaseModel):
         """Returns the HTML template for the daily activity report."""
         return dedent(
             """
-            <h1>Daily activity report for {date}</h1>
+            <h1>Daily activity report for {{ date }}</h1>
             <table border="1" cellpadding="5" cellspacing="0">
                 <tr>
                     <th>User</th>
