@@ -7,6 +7,8 @@ requires-python = ">=3.12"
 dependencies = [
     "apscheduler>=3.11.0",
     "fastapi[standard]>=0.115.6",
+    "loguru>=0.7.3",
+    "pydantic-settings>=2.7.0",
 ]
 
 [dependency-groups]
@@ -43,3 +45,5 @@ ignore-overlong-task-comments = true
 [tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
+
+

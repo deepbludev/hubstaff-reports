@@ -1,0 +1,10 @@
+hubstaff:
+  api_url: https://mutator.reef.pl
+  app_token:
+  organization_id: 
+  username: john.doe@exmaple.com
+  password: 
+
+reports:
+  output_dir: /reports
+  report_time: 00:00
