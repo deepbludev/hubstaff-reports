@@ -1,9 +1,8 @@
 from contextlib import asynccontextmanager
-from datetime import date, timedelta
 
 from fastapi import FastAPI
 
-from app.hubstaff.client import HubstaffClientDep
+from .api import reports_router
 
 
 @asynccontextmanager
@@ -17,23 +16,13 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.include_router(reports_router)
 
 
 @app.get("/health")
 async def health_check():
     """Health check endpoint."""
     return {"status": "OK"}
-
-
-@app.get("/reports/activity")
-async def get_activity_report(hubstaff_client: HubstaffClientDep):
-    """Get the activity report."""
-    today = date.today()
-    yesterday = today - timedelta(days=1)
-    return await hubstaff_client.get_work_by_day(
-        start_date=yesterday,
-        stop_date=today,
-    )
 
 
 async def startup(app: FastAPI):

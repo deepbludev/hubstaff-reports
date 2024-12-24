@@ -87,7 +87,6 @@ class HubstaffClient:
             headers=self.header(),
             params=self.base_params(pagination) | date_params,
         )
-        logger.debug(response.json())
         data = response.raise_for_status().json()["daily_activities"]
         return [DailyActivity.model_validate(activity) for activity in data]
 
